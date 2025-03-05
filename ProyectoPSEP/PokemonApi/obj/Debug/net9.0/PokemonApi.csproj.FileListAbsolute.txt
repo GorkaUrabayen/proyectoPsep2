@@ -35,14 +35,3 @@ C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\ProyectoPSEP\PokemonApi\obj\Debu
 C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.pdb
 C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.genruntimeconfig.cache
 C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\ref\PokemonApi.dll
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.csproj.AssemblyReference.cache
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.AssemblyInfoInputs.cache
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.AssemblyInfo.cs
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.csproj.CoreCompileInputs.cache
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.sourcelink.json
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.dll
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\refint\PokemonApi.dll
-C:\Users\gorka\OneDrive\Escritorio\ProyectoPSEP\proyectoPsep2\ProyectoPSEP\PokemonApi\obj\Debug\net9.0\PokemonApi.pdb

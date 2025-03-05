@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj": {}
+    "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj": {
+    "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj",
+        "projectUniqueName": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj",
         "projectName": "PokemonApi",
-        "projectPath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj",
+        "projectPath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\PokemonApi\\PokemonApi.csproj",
         "packagesPath": "C:\\Users\\gorka\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonApi\\obj\\",
+        "outputPath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\PokemonApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -52,15 +52,11 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.0-rc.2.24474.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.5.0, )"
-            },
-            "System.Text.Json": {
-              "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[6.4.0, )"
             }
           },
           "imports": [

@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ProyectoPokemons.API.csproj .props" />
-</Project>
