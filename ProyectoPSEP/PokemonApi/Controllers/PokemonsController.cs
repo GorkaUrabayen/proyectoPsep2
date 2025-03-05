@@ -1,92 +1,69 @@
 using Microsoft.AspNetCore.Mvc;
 using PokemonApi.Models;
 using PokemonApi.Services;
-using System.Text.Json;
 
 namespace PokemonApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PokemonsController : ControllerBase
+    public class PokemonController : ControllerBase
     {
-        private static List<Pokemon> _pokemons = new List<Pokemon>
-        {
-            new Pokemon { Id = 1, Nombre = "Pikachu", Tipo = "Eléctrico", Nivel = 15, Poder = 55.0 },
-            new Pokemon { Id = 2, Nombre = "Bulbasaur", Tipo = "Planta", Nivel = 12, Poder = 49.0 }
-        };
+        private readonly PokemonService _pokemonService;
 
-        private readonly CipherService _cipherService;
-        private const string key = "miClaveSecreta";
-
-        public PokemonsController(CipherService cipherService)
+        public PokemonController(PokemonService pokemonService)
         {
-            _cipherService = cipherService;
+            _pokemonService = pokemonService;
         }
 
-        // 🔹 Obtener todos los Pokémon (SIN cifrado)
         [HttpGet]
-        public ActionResult<List<Pokemon>> Get()
+        public ActionResult<IEnumerable<Pokemon>> GetAll()
         {
-            return Ok(_pokemons);
+            return Ok(_pokemonService.GetAll());
         }
 
-        // 🔹 Obtener un Pokémon por ID (SIN cifrado)
         [HttpGet("{id}")]
-        public ActionResult<Pokemon> GetById(int id)
+        public ActionResult<Pokemon> GetById(long id)
         {
-            var pokemon = _pokemons.FirstOrDefault(p => p.Id == id);
-            if (pokemon == null) return NotFound();
+            var pokemon = _pokemonService.GetById(id);
+            if (pokemon == null)
+            {
+                return NotFound();
+            }
             return Ok(pokemon);
         }
 
-        // 🔹 Crear un nuevo Pokémon (Datos cifrados en la solicitud)
         [HttpPost]
-        public ActionResult Post([FromBody] EncryptedData encryptedData)
+        public ActionResult<Pokemon> Create(Pokemon pokemon)
         {
-            var decryptedJson = _cipherService.Decrypt(encryptedData.Data, key);
-            var pokemon = JsonSerializer.Deserialize<Pokemon>(decryptedJson);
-
-            if (pokemon == null) return BadRequest(new { error = "Datos incorrectos" });
-
-            _pokemons.Add(pokemon);
-            return CreatedAtAction(nameof(Get), new { id = pokemon.Id }, pokemon);
+            _pokemonService.Add(pokemon);
+            return CreatedAtAction(nameof(GetById), new { id = pokemon.Id }, pokemon);
         }
 
-        // 🔹 Actualizar un Pokémon (Datos cifrados en la solicitud)
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] EncryptedData encryptedData)
+        public ActionResult Update(long id, Pokemon updatedPokemon)
         {
-            var decryptedJson = _cipherService.Decrypt(encryptedData.Data, key);
-            var pokemon = JsonSerializer.Deserialize<Pokemon>(decryptedJson);
+            var existingPokemon = _pokemonService.GetById(id);
+            if (existingPokemon == null)
+            {
+                return NotFound();
+            }
 
-            if (pokemon == null) return BadRequest(new { error = "Datos incorrectos" });
-
-            var existingPokemon = _pokemons.FirstOrDefault(p => p.Id == id);
-            if (existingPokemon == null) return NotFound();
-
-            existingPokemon.Nombre = pokemon.Nombre;
-            existingPokemon.Tipo = pokemon.Tipo;
-            existingPokemon.Nivel = pokemon.Nivel;
-            existingPokemon.Poder = pokemon.Poder;
-
+            updatedPokemon.Id = id;
+            _pokemonService.Update(updatedPokemon);
             return NoContent();
         }
 
-        // 🔹 Eliminar un Pokémon
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(long id)
         {
-            var pokemon = _pokemons.FirstOrDefault(p => p.Id == id);
-            if (pokemon == null) return NotFound();
+            var existingPokemon = _pokemonService.GetById(id);
+            if (existingPokemon == null)
+            {
+                return NotFound();
+            }
 
-            _pokemons.Remove(pokemon);
+            _pokemonService.Delete(id);
             return NoContent();
         }
-    }
-
-    // Clase para manejar los datos cifrados
-    public class EncryptedData
-    {
-        public string Data { get; set; } = string.Empty;
     }
 }

@@ -2,10 +2,20 @@ namespace PokemonApi.Models
 {
     public class Pokemon
     {
-        public int Id { get; set; }
-        public required string Nombre { get; set; }
-        public required string Tipo { get; set; }
+        public long Id { get; set; }
+        public string Nombre { get; set; }
+        public string Tipo { get; set; }
         public int Nivel { get; set; }
-        public double Poder { get; set; }
+        public Estadisticas Estadisticas { get; set; }
+        public List<string> Movimientos { get; set; }
+        public DateTime CreadoEn { get; set; }
+        public DateTime ActualizadoEn { get; set; }
+    }
+
+    public class Estadisticas
+    {
+        public int HP { get; set; }
+        public int Ataque { get; set; }
+        public int Defensa { get; set; }
     }
 }
