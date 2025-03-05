@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xm7B+eutiEo=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\ProyectoPSEP\\cliservSinc\\Servidor\\Servidor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gorka\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
