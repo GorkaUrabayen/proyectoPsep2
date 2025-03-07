@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "dYtFL/cMARE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ProyectoPSEP\\PokemonAPI\\PokemonAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gorka\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.0-rc.2.24474.3\\microsoft.aspnetcore.openapi.9.0.0-rc.2.24474.3.nupkg.sha512",
+    "C:\\Users\\gorka\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512",
+    "C:\\Users\\gorka\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "Name": "Charizard",
+    "Type": "Fuego",
+    "Sexo": "Macho",
+    "Poder": 120
+  },
+  {
+    "Id": 2,
+    "Name": "Charizard",
+    "Type": "Fuego-Volador",
+    "Sexo": "Embra",
+    "Poder": 130
+  }
+]
