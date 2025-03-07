@@ -29,8 +29,17 @@ namespace ClienteServ.Servidor
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
+            });
+
+            services.AddControllers();
         }
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

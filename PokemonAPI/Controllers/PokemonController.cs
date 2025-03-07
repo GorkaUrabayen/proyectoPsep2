@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using PokemonAPI.Models; // Asegúrate de que este espacio de nombres sea el correcto para el modelo de Pokemon
 
 namespace PokemonApi.Controllers
 {
@@ -13,6 +14,7 @@ namespace PokemonApi.Controllers
     {
         private const string JsonFilePath = "pokemons.json";
 
+        // Método para cargar los Pokémon desde el archivo JSON
         private List<Pokemon> LoadPokemons()
         {
             if (!System.IO.File.Exists(JsonFilePath))
@@ -22,12 +24,14 @@ namespace PokemonApi.Controllers
             return JsonSerializer.Deserialize<List<Pokemon>>(json);
         }
 
+        // Método para guardar los Pokémon al archivo JSON
         private void SavePokemons(List<Pokemon> pokemons)
         {
             var json = JsonSerializer.Serialize(pokemons, new JsonSerializerOptions { WriteIndented = true });
             System.IO.File.WriteAllText(JsonFilePath, json);
         }
 
+        // Obtener todos los Pokémon
         [HttpGet]
         public IActionResult GetAllPokemons()
         {
@@ -35,28 +39,39 @@ namespace PokemonApi.Controllers
             return Ok(pokemons);
         }
 
+        // Obtener un Pokémon por su ID
+        // Obtener un Pokémon por su ID
         [HttpGet("{id}")]
         public IActionResult GetPokemonById(int id)
         {
+            // Cargar los Pokémon desde el archivo JSON
             var pokemons = LoadPokemons();
+
+            // Buscar el Pokémon por ID
             var pokemon = pokemons.FirstOrDefault(p => p.Id == id);
+
             if (pokemon == null)
             {
-                return NotFound();
+                return NotFound(); // Devuelve 404 si no se encuentra el Pokémon
             }
-            return Ok(pokemon);
+
+            return Ok(pokemon); // Devuelve el Pokémon si se encuentra
         }
 
+
+
+        // Crear un nuevo Pokémon
         [HttpPost]
         public IActionResult CreatePokemon([FromBody] Pokemon newPokemon)
         {
             var pokemons = LoadPokemons();
-            newPokemon.Id = pokemons.Max(p => p.Id) + 1;
+            newPokemon.Id = pokemons.Max(p => p.Id) + 1; // Asignar un nuevo ID automáticamente
             pokemons.Add(newPokemon);
             SavePokemons(pokemons);
             return CreatedAtAction(nameof(GetPokemonById), new { id = newPokemon.Id }, newPokemon);
         }
 
+        // Actualizar los detalles de un Pokémon existente
         [HttpPut("{id}")]
         public IActionResult UpdatePokemon(int id, [FromBody] Pokemon updatedPokemon)
         {
@@ -69,13 +84,15 @@ namespace PokemonApi.Controllers
 
             pokemon.Name = updatedPokemon.Name;
             pokemon.Type = updatedPokemon.Type;
-            pokemon.Hp = updatedPokemon.Hp;      // Actualizar campo Hp
-            pokemon.Attack = updatedPokemon.Attack; // Actualizar campo Attack
+            pokemon.Hp = updatedPokemon.Hp;
+            pokemon.Poder = updatedPokemon.Poder;
             SavePokemons(pokemons);
 
             return Ok(pokemon);
         }
 
+
+        // Eliminar un Pokémon por su ID
         [HttpDelete("{id}")]
         public IActionResult DeletePokemon(int id)
         {
@@ -91,14 +108,5 @@ namespace PokemonApi.Controllers
 
             return NoContent();
         }
-    }
-
-    public class Pokemon
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int Hp { get; set; }     // Campo de HP
-        public int Attack { get; set; } // Campo de Ataque
     }
 }

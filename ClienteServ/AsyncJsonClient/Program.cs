@@ -53,96 +53,200 @@ namespace AsyncJsonClient.Cliente
 
         static async Task ListarPokemones()
         {
-            HttpResponseMessage response = await client.GetAsync("");
-            string json = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("\n🔍 Lista de Pokémon:");
-            Console.WriteLine(json);
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("");
+                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+
+                string json = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("\n🔍 Lista de Pokémon:");
+                Console.WriteLine(json);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"❌ Error al listar los Pokémon: {e.Message}");
+            }
         }
 
         static async Task BuscarPokemon()
         {
             Console.Write("🔍 Ingrese ID del Pokémon: ");
-            string id = Console.ReadLine();
-            HttpResponseMessage response = await client.GetAsync($"/{id}");
-            string json = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("\n📋 Resultado:");
-            Console.WriteLine(json);
+            string idInput = Console.ReadLine();
+
+            // Validar que el ID sea un número válido
+            if (!int.TryParse(idInput, out int id))
+            {
+                Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
+                return;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"{client.BaseAddress}/{id}");
+                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+
+                string json = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("\n📋 Resultado:");
+                Console.WriteLine(json);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"❌ Error al buscar Pokémon: {e.Message}");
+            }
         }
 
         static async Task AgregarPokemon()
         {
             Console.Write("📝 Nombre: ");
             string nombre = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(nombre))
+            {
+                Console.WriteLine("❌ El nombre no puede estar vacío.");
+                return;
+            }
+
             Console.Write("🔥 Tipo: ");
             string tipo = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(tipo))
+            {
+                Console.WriteLine("❌ El tipo no puede estar vacío.");
+                return;
+            }
+
             Console.Write("💖 HP: ");
-            int hp = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int hp) || hp < 0)
+            {
+                Console.WriteLine("❌ El HP debe ser un número entero positivo.");
+                return;
+            }
+
             Console.Write("⚔️ Ataque: ");
-            int ataque = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int ataque) || ataque < 0)
+            {
+                Console.WriteLine("❌ El Ataque debe ser un número entero positivo.");
+                return;
+            }
 
             var nuevoPokemon = new
             {
                 Name = nombre,
                 Type = tipo,
-                Hp = hp,           // Campo Hp
-                Attack = ataque    // Campo Attack
+                Hp = hp,
+                Attack = ataque
             };
 
             var json = JsonSerializer.Serialize(nuevoPokemon);
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync("", content);
 
-            Console.WriteLine("\n✅ Pokémon agregado con éxito!");
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync("", content);
+                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+
+                Console.WriteLine("\n✅ Pokémon agregado con éxito!");
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"❌ Error al agregar Pokémon: {e.Message}");
+            }
         }
 
         static async Task ActualizarPokemon()
         {
             Console.Write("✏️ Ingrese ID del Pokémon a actualizar: ");
-            string id = Console.ReadLine();
+            string idInput = Console.ReadLine();
+
+            // Validar que el ID sea un número válido
+            if (!int.TryParse(idInput, out int id))
+            {
+                Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
+                return;
+            }
+
             Console.Write("📝 Nuevo Nombre: ");
             string nombre = Console.ReadLine();
-            Console.Write("🔥 Nuevo Tipo: ");
+
+            if (string.IsNullOrWhiteSpace(nombre))
+            {
+                Console.WriteLine("❌ El nombre no puede estar vacío.");
+                return;
+            }
+
+            Console.Write("🔥 Nuevo Tipo: 1");
             string tipo = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(tipo))
+            {
+                Console.WriteLine("❌ El tipo no puede estar vacío.");
+                return;
+            }
+
             Console.Write("💖 Nuevo HP: ");
-            int hp = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int hp) || hp < 0)
+            {
+                Console.WriteLine("❌ El HP debe ser un número entero positivo.");
+                return;
+            }
+
             Console.Write("⚔️ Nuevo Ataque: ");
-            int ataque = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int ataque) || ataque < 0)
+            {
+                Console.WriteLine("❌ El Ataque debe ser un número entero positivo.");
+                return;
+            }
 
             var pokemonActualizado = new
             {
-                Id = int.Parse(id),
+                Id = id,  // Asegúrate de enviar el ID correcto
                 Name = nombre,
                 Type = tipo,
-                Hp = hp,          // Campo Hp
-                Attack = ataque   // Campo Attack
+                Hp = hp,
+                Attack = ataque
             };
 
             var json = JsonSerializer.Serialize(pokemonActualizado);
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PutAsync($"/{id}", content);
 
-            Console.WriteLine("\n✅ Pokémon actualizado!");
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            try
+            {
+               HttpResponseMessage response = await client.PutAsync($"{client.BaseAddress}/{id}", content);
+                response.EnsureSuccessStatusCode(); // Asegúrate de que la respuesta sea exitosa
+
+                Console.WriteLine("\n✅ Pokémon actualizado!");
+                Console.WriteLine(await response.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"❌ Error al actualizar Pokémon: {e.Message}");
+            }
         }
 
         static async Task EliminarPokemon()
         {
             Console.Write("🗑️ Ingrese ID del Pokémon a eliminar: ");
-            string id = Console.ReadLine();
+            string idInput = Console.ReadLine();
 
-            // Asegúrate de que el id es un número válido y forma la URL completa
-            string url = $"/api/pokemon/{id}";
+            // Validar que el ID sea un número válido
+            if (!int.TryParse(idInput, out int id))
+            {
+                Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
+                return;
+            }
 
-            // Realiza la solicitud DELETE a la URL completa
-            HttpResponseMessage response = await client.DeleteAsync(url);
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync($"/{id}"); // Solicitud DELETE para eliminar Pokémon
+                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
 
-            // Verifica el código de estado de la respuesta
-            if (response.IsSuccessStatusCode)
                 Console.WriteLine("\n✅ Pokémon eliminado!");
-            else
-                Console.WriteLine($"\n❌ No se pudo eliminar el Pokémon. Código de estado: {response.StatusCode}");
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"❌ Error al eliminar Pokémon: {e.Message}");
+            }
         }
-
     }
 }

@@ -4,20 +4,20 @@
     "Name": "Charizard",
     "Type": "Fuego",
     "Hp": 0,
-    "Attack": 0
+    "Poder": 0
   },
   {
     "Id": 2,
     "Name": "Charizard",
     "Type": "Fuego-Volador",
     "Hp": 0,
-    "Attack": 0
+    "Poder": 0
   },
   {
     "Id": 3,
-    "Name": "Telmo",
-    "Type": "Lucha",
-    "Hp": 250,
-    "Attack": 150
+    "Name": "Gorka",
+    "Type": "Fuego",
+    "Hp": 200,
+    "Poder": 0
   }
 ]
