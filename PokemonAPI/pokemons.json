@@ -15,9 +15,16 @@
   },
   {
     "Id": 3,
-    "Name": "Gorka",
-    "Type": "Fuego",
-    "Hp": 200,
-    "Attack": 20
+    "Name": "Telmo",
+    "Type": "Lucha",
+    "Hp": 250,
+    "Attack": 150
+  },
+  {
+    "Id": 4,
+    "Name": "s",
+    "Type": "s",
+    "Hp": 2,
+    "Attack": 2
   }
 ]

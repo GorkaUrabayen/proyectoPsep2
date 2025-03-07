@@ -6,7 +6,7 @@ namespace AsyncJsonClient
         public int PokemonId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Sexo { get; set; }  // Nuevo atributo
-        public int Poder { get; set; }    // Nuevo atributo
+        public int Hp { get; set; }  // Tipo correcto: int
+        public int Attack { get; set; }  // Nuevo campo Attack
     }
 }

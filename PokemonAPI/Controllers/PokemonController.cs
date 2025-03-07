@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace PokemonApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Consumes("application/json")]  // Indica que la API consume JSON
+    [Produces("application/json")]  // Indica que la API produce JSON
     public class PokemonController : ControllerBase
     {
         private const string JsonFilePath = "pokemons.json";
@@ -69,8 +69,8 @@ namespace PokemonApi.Controllers
 
             pokemon.Name = updatedPokemon.Name;
             pokemon.Type = updatedPokemon.Type;
-            pokemon.Hp = updatedPokemon.Hp;
-            pokemon.Attack = updatedPokemon.Attack;
+            pokemon.Hp = updatedPokemon.Hp;      // Actualizar campo Hp
+            pokemon.Attack = updatedPokemon.Attack; // Actualizar campo Attack
             SavePokemons(pokemons);
 
             return Ok(pokemon);
@@ -98,7 +98,7 @@ namespace PokemonApi.Controllers
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public int Hp { get; set; }
-        public int Attack { get; set; }
+        public int Hp { get; set; }     // Campo de HP
+        public int Attack { get; set; } // Campo de Ataque
     }
 }

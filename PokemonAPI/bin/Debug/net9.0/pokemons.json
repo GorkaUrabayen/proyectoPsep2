@@ -3,14 +3,21 @@
     "Id": 1,
     "Name": "Charizard",
     "Type": "Fuego",
-    "Sexo": "Macho",
-    "Poder": 120
+    "Hp": 0,
+    "Attack": 0
   },
   {
     "Id": 2,
     "Name": "Charizard",
     "Type": "Fuego-Volador",
-    "Sexo": "Embra",
-    "Poder": 130
+    "Hp": 0,
+    "Attack": 0
+  },
+  {
+    "Id": 3,
+    "Name": "Telmo",
+    "Type": "Lucha",
+    "Hp": 250,
+    "Attack": 150
   }
 ]

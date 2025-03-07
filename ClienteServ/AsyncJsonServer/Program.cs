@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,7 +65,6 @@ namespace ClienteServ.Servidor
 
                     var response = await httpClient.PostAsync(apiUrl, content);
                     var responseBody = await response.Content.ReadAsStringAsync();
-
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync(responseBody);
                 });

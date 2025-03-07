@@ -84,8 +84,8 @@ namespace AsyncJsonClient.Cliente
             {
                 Name = nombre,
                 Type = tipo,
-                Hp = hp,
-                Attack = ataque
+                Hp = hp,           // Campo Hp
+                Attack = ataque    // Campo Attack
             };
 
             var json = JsonSerializer.Serialize(nuevoPokemon);
@@ -114,8 +114,8 @@ namespace AsyncJsonClient.Cliente
                 Id = int.Parse(id),
                 Name = nombre,
                 Type = tipo,
-                Hp = hp,
-                Attack = ataque
+                Hp = hp,          // Campo Hp
+                Attack = ataque   // Campo Attack
             };
 
             var json = JsonSerializer.Serialize(pokemonActualizado);
