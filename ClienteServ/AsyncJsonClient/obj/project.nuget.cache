@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GuHipzzjOxY=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gorka\\OneDrive\\Escritorio\\ProyectoPSEP\\proyectoPsep2\\ClienteServ\\AsyncJsonClient\\Cliente.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gorka\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
