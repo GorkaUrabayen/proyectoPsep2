@@ -130,12 +130,19 @@ namespace AsyncJsonClient.Cliente
         {
             Console.Write("🗑️ Ingrese ID del Pokémon a eliminar: ");
             string id = Console.ReadLine();
-            HttpResponseMessage response = await client.DeleteAsync($"/{id}");
 
+            // Asegúrate de que el id es un número válido y forma la URL completa
+            string url = $"/api/pokemon/{id}";
+
+            // Realiza la solicitud DELETE a la URL completa
+            HttpResponseMessage response = await client.DeleteAsync(url);
+
+            // Verifica el código de estado de la respuesta
             if (response.IsSuccessStatusCode)
                 Console.WriteLine("\n✅ Pokémon eliminado!");
             else
-                Console.WriteLine("\n❌ No se pudo eliminar el Pokémon.");
+                Console.WriteLine($"\n❌ No se pudo eliminar el Pokémon. Código de estado: {response.StatusCode}");
         }
+
     }
 }
