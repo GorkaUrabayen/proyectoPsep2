@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncJsonClient.Crypto;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -9,10 +10,30 @@ namespace AsyncJsonClient.Cliente
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
+        private static readonly RSAEncryption rsaEncryption = new RSAEncryption();
+
+        private static string clientPublicKey;
+        private static string clientPrivateKey;
+        private static string serverPublicKey = "<insertar clave pública del servidor aquí>"; // Necesitas la clave pública del servidor
 
         static async Task Main()
         {
-            client.BaseAddress = new Uri("http://localhost:5062/api/pokemon"); // URL de la API REST
+            client.BaseAddress = new Uri("http://localhost:5062/api/pokemon");
+
+            // Generar claves RSA para el cliente
+            clientPublicKey = rsaEncryption.ExportPublicKey();
+            clientPrivateKey = rsaEncryption.ExportPrivateKey();
+
+            // Verificar si las claves generadas son Base64 válidas
+            if (!IsValidBase64(clientPublicKey) || !IsValidBase64(clientPrivateKey))
+            {
+                Console.WriteLine("❌ Error: Las claves generadas no son válidas en formato Base64.");
+                return;
+            }
+
+            Console.WriteLine("🔑 Claves RSA generadas para el cliente:");
+            Console.WriteLine($"📌 Clave pública del cliente: {clientPublicKey}");
+            Console.WriteLine($"🔒 Clave privada del cliente: {clientPrivateKey}");
 
             while (true)
             {
@@ -56,7 +77,7 @@ namespace AsyncJsonClient.Cliente
             try
             {
                 HttpResponseMessage response = await client.GetAsync("");
-                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+                response.EnsureSuccessStatusCode();
 
                 string json = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("\n🔍 Lista de Pokémon:");
@@ -73,7 +94,6 @@ namespace AsyncJsonClient.Cliente
             Console.Write("🔍 Ingrese ID del Pokémon: ");
             string idInput = Console.ReadLine();
 
-            // Validar que el ID sea un número válido
             if (!int.TryParse(idInput, out int id))
             {
                 Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
@@ -83,7 +103,7 @@ namespace AsyncJsonClient.Cliente
             try
             {
                 HttpResponseMessage response = await client.GetAsync($"{client.BaseAddress}/{id}");
-                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+                response.EnsureSuccessStatusCode();
 
                 string json = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("\n📋 Resultado:");
@@ -143,7 +163,7 @@ namespace AsyncJsonClient.Cliente
             try
             {
                 HttpResponseMessage response = await client.PostAsync("", content);
-                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+                response.EnsureSuccessStatusCode();
 
                 Console.WriteLine("\n✅ Pokémon agregado con éxito!");
                 Console.WriteLine(await response.Content.ReadAsStringAsync());
@@ -159,7 +179,6 @@ namespace AsyncJsonClient.Cliente
             Console.Write("✏️ Ingrese ID del Pokémon a actualizar: ");
             string idInput = Console.ReadLine();
 
-            // Validar que el ID sea un número válido
             if (!int.TryParse(idInput, out int id))
             {
                 Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
@@ -175,7 +194,7 @@ namespace AsyncJsonClient.Cliente
                 return;
             }
 
-            Console.Write("🔥 Nuevo Tipo: 1");
+            Console.Write("🔥 Nuevo Tipo: ");
             string tipo = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(tipo))
@@ -200,7 +219,7 @@ namespace AsyncJsonClient.Cliente
 
             var pokemonActualizado = new
             {
-                Id = id,  // Asegúrate de enviar el ID correcto
+                Id = id,
                 Name = nombre,
                 Type = tipo,
                 Hp = hp,
@@ -212,8 +231,8 @@ namespace AsyncJsonClient.Cliente
 
             try
             {
-               HttpResponseMessage response = await client.PutAsync($"{client.BaseAddress}/{id}", content);
-                response.EnsureSuccessStatusCode(); // Asegúrate de que la respuesta sea exitosa
+                HttpResponseMessage response = await client.PutAsync($"{client.BaseAddress}/{id}", content);
+                response.EnsureSuccessStatusCode();
 
                 Console.WriteLine("\n✅ Pokémon actualizado!");
                 Console.WriteLine(await response.Content.ReadAsStringAsync());
@@ -229,7 +248,6 @@ namespace AsyncJsonClient.Cliente
             Console.Write("🗑️ Ingrese ID del Pokémon a eliminar: ");
             string idInput = Console.ReadLine();
 
-            // Validar que el ID sea un número válido
             if (!int.TryParse(idInput, out int id))
             {
                 Console.WriteLine("❌ El ID ingresado no es válido. Por favor ingrese un número.");
@@ -238,14 +256,40 @@ namespace AsyncJsonClient.Cliente
 
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync($"/{id}"); // Solicitud DELETE para eliminar Pokémon
-                response.EnsureSuccessStatusCode(); // Asegurarse de que la respuesta sea exitosa
+                // Enviar la solicitud DELETE directamente con el ID
+                HttpResponseMessage response = await client.DeleteAsync($"{client.BaseAddress}/{id}");
 
-                Console.WriteLine("\n✅ Pokémon eliminado!");
+                // Verificar si la respuesta fue exitosa
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("\n✅ Pokémon eliminado con éxito!");
+                    Console.WriteLine(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    Console.WriteLine($"❌ Error al eliminar Pokémon. Código de estado: {response.StatusCode}");
+                }
             }
             catch (HttpRequestException e)
             {
                 Console.WriteLine($"❌ Error al eliminar Pokémon: {e.Message}");
+            }
+        }
+
+
+        static bool IsValidBase64(string base64String)
+        {
+            if (string.IsNullOrEmpty(base64String))
+                return false;
+            try
+            {
+                Convert.FromBase64String(base64String);
+                return true;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("❌ Error: La cadena no es un Base64 válido.");
+                return false;
             }
         }
     }

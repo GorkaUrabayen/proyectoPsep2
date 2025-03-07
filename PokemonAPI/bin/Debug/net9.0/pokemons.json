@@ -15,9 +15,9 @@
   },
   {
     "Id": 3,
-    "Name": "Gorka",
-    "Type": "Fuego",
-    "Hp": 200,
+    "Name": "Unai",
+    "Type": "Agua",
+    "Hp": 20,
     "Poder": 0
   }
 ]

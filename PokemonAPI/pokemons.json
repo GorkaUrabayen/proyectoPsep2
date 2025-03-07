@@ -1,9 +1,9 @@
 [
   {
     "Id": 1,
-    "Name": "Charizard",
-    "Type": "Fuego",
-    "Hp": 0,
+    "Name": "Pichu",
+    "Type": "Rayo",
+    "Hp": 170,
     "Poder": 0
   },
   {
@@ -18,6 +18,20 @@
     "Name": "Unai",
     "Type": "Agua",
     "Hp": 20,
+    "Poder": 0
+  },
+  {
+    "Id": 5,
+    "Name": "Gorka",
+    "Type": "Fuego",
+    "Hp": 200,
+    "Poder": 0
+  },
+  {
+    "Id": 6,
+    "Name": "Dito",
+    "Type": "Nomral",
+    "Hp": 134,
     "Poder": 0
   }
 ]
